@@ -1,0 +1,63 @@
+# On-demand R notebooks
+
+This interactive R notebook is running in R on a gizmo node that was snagged
+with grabcpu.
+
+Hint: Use F4 to compile.
+
+## Loading data from silo
+
+Since R is running on a gizmo node, we've got access to silo. This is
+pretty neat, since that also means we have access to Galaxy output.
+
+```{r load-some-data}
+## This is where our files live.
+database <- "/shared/silo_researcher/Matsen_F/MatsenGrp/data/galaxy-shapley/database"
+
+## Eventually stuff like this will be automated by Galaxy:
+
+## "[Genus] Grouped-by-specimen classification (CSV)",csv,84726a17127220c7
+by.specimen <- read.csv(file.path(database, "/files/004/dataset_4880.dat"),
+                        header=TRUE, as.is=TRUE)
+
+## "1.TCA.454Reads.1000.fasta",fasta,2a0d57490303b027
+suppressPackageStartupMessages(library(seqinr))
+reads <- read.fasta(file.path(database, "files/001/dataset_1351.dat"))
+
+## But first there needs to be a little glue layer in between that
+## knows how to load various kinds of data into R, which is in
+## progress.
+```
+
+Let's check that our data is there.
+
+```{r check-by-specimen}
+head(by.specimen)
+```
+
+```{r check-reads}
+str(reads[1])
+```
+
+Yay!
+
+## Doing stuff
+
+Now we can do whatever we want with our data (CSV, FASTA, BAM, ...
+anything R can be made to understand). Like make pretty pictures!
+
+```{r plot-some-data}
+suppressPackageStartupMessages(library(ggplot2))
+
+ggplot(subset(by.specimen, tax_name=="Lactobacillus")[1:10,], aes(x=specimen, y=placements)) + geom_point(aes(color=tally))
+```
+
+## Even more cool stuff
+
+In addition to presenting an editor, Shiny (the library R is using to serve this application) can also fetch text to render from remote sources:
+
+* runGist -- Run a Shiny application from https://gist.github.com
+* runGitHub -- Run a Shiny application from a GitHub repository
+* runUrl -- Run a Shiny application from a URL
+
+Et voila! :)
