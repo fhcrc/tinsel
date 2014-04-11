@@ -1,0 +1,4 @@
+:name "shiny-galaxy"
+
+:relevant-files '("\\.eproject$" "\\.R$")
+:irrelevant-files '("/knitr/")
