@@ -18,7 +18,7 @@ shinyUI(
             ),
         div(id = 'notebook', title = 'Compile notebook: F4\nInsert chunk: Ctrl+Alt+I',
             ## TODO make the magic happen
-            paste(readLines('magpie-demo.Rmd'), collapse = '\n')),
+            paste(readLines('src/magpie-demo.Rmd'), collapse = '\n')),
         tags$textarea(id = 'nbSrc', style = 'display: none;'),
         tags$script(src = 'ace-shiny.js', type = 'text/javascript'),
         htmlOutput('nbOut'),
