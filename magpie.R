@@ -10,9 +10,9 @@ shiny::runApp(system.file("shiny", package="knitr"), host="0.0.0.0", port=sample
 ##
 ##      This might look something like:
 ##
-##      $ shiny-galaxy.R --csv hyperfreq.calls:/path/to/hyperfreq_calls.csv --fasta reference.seqs:/path/to/sequences.fasta
+##      $ magpie.R --csv hyperfreq.calls:/path/to/hyperfreq_calls.csv --fasta reference.seqs:/path/to/sequences.fasta
 ##
-##      Then R you'd have a data frame named hyperfreq.calls and a
+##      Then in R you'd have a data frame named hyperfreq.calls and a
 ##      $some_library sequence object named reference.seqs available.
 
 ## TODO combine this with grabcpu to fire up a shiny server on gizmo for interactive use
