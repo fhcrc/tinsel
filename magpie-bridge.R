@@ -16,11 +16,11 @@ function read.dataset.csv(file) {
     return(read.csv(file, as.is=TRUE))
 }
 
-
 ## TODO compile a regex to parse the arguments, FORMAT:R_NAME:FILE
 ## ([^:]+):([^:]+):(.+)
 
 args <- commandArgs(trailingOnly=TRUE)
 
 for (s in args) {
-    assign(dataset
+    ## TODO assign(...)
+}
