@@ -1,18 +1,25 @@
 <tool id="hutch_magpie" name="Export data to magpie" version="1.0.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>magpie.R --version</version_command>
-  <command interpreter="Rscript">
+  <!-- TODO generate arguments with cheetah
+
+  Generate arguments of the form FORMAT:VARIABLE.NAME:FILE e.g.
+
+  csv:by.specimen:/path/to/by_specimen.csv
+  fasta:reads:/path/to/sequences.fasta
+
+  -->
+  <command interpreter="bash">
     magpie.R
-    <!-- TODO generate arguments with cheetah
-
-    Generate arguments of the form --FORMAT VARIABLE.NAME:FILE e.g.
-
-    --csv by.specimen:/path/to/by_specimen.csv
-    --fasta reads:/path/to/sequences.fasta
-    -->
+    #for $i, $s in enumerate($exports)
+        "${s.input.format}:${s.r_name}:${s.input.file_name}"
+    #end for
   </command>
   <inputs>
-    <!-- TODO at least one input -->
+    <repeat name="exports" title="Datasets to export to magpie">
+      <param name="input" type="data" label="Dataset"/>
+      <param name="r_name" type="text" size=value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
+    </repeat>
   </inputs>
   <outputs>
     <!-- TODO outputs only for non-interactive sessions -->
