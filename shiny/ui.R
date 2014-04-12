@@ -17,8 +17,8 @@ shinyUI(
                         type = 'text/javascript')
             ),
         div(id = 'notebook', title = 'Compile notebook: F4\nInsert chunk: Ctrl+Alt+I',
-            paste(c('This is an example taken from the **knitr** package. Press `F4` or `Ctrl+Shift+H` to compile it, and `Ctrl+Alt+I` to insert a code chunk.', '',
-                    readLines(system.file('examples', 'knitr-minimal.Rmd', package = 'knitr'))), collapse = '\n')),
+            ## TODO make the magic happen
+            paste(readLines('magpie-demo.Rmd'), collapse = '\n')),
         tags$textarea(id = 'nbSrc', style = 'display: none;'),
         tags$script(src = 'ace-shiny.js', type = 'text/javascript'),
         htmlOutput('nbOut'),
