@@ -4,16 +4,16 @@ options(device.ask.default = FALSE)
 
 shinyServer(function(input, output) {
 
-  output$nbOut = reactive({
-    src = input$nbSrc
-    if (length(src) == 0L || src == '') return('Nothing to show yet...')
-    on.exit(unlink('figure/', recursive = TRUE)) # do not need the figure dir
+    output$nbOut = reactive({
+        src = input$nbSrc
+        if (length(src) == 0L || src == '') return('Nothing to show yet...')
+        on.exit(unlink('figure/', recursive = TRUE)) # do not need the figure dir
 
-    paste(knit2html(text = src, fragment.only = TRUE, quiet = TRUE),
-          '<script>',
-          '// highlight code blocks',
-          "$('#nbOut pre code').each(function(i, e) {hljs.highlightBlock(e)});",
-          'MathJax.Hub.Typeset(); // update MathJax expressions',
-          '</script>', sep = '\n')
-  })
+        paste(knit2html(text = src, fragment.only = TRUE, quiet = TRUE),
+              '<script>',
+              '// highlight code blocks',
+              "$('#nbOut pre code').each(function(i, e) {hljs.highlightBlock(e)});",
+              'MathJax.Hub.Typeset(); // update MathJax expressions',
+              '</script>', sep = '\n')
+    })
 })
