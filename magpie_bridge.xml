@@ -14,11 +14,15 @@
   <configfiles>
     <!-- TODO can this be CDATA? -->
     <configfile name="config">
-      #for $i, $s in enumerate($exports)
-      ## TODO Add comment with &quot;Dataset name&quot;,&quot;API_KEY&quot;,...
-      ${s.r_name} &lt;- read.csv(&quot;${s.input.file_name}&quot;, as.is=TRUE)
+## magpie begin ##
 
-      #end for
+#for $i, $s in enumerate($exports)
+## TODO Add comment with &quot;Dataset name&quot;,&quot;API_KEY&quot;,...
+${s.r_name} &lt;- read.csv(&quot;${s.input.file_name}&quot;, as.is=TRUE)
+
+#end for
+
+## magpie end ##
     </configfile>
   </configfiles>
   <help>
