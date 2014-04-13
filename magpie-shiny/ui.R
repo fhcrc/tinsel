@@ -24,8 +24,8 @@ shinyUI(
             ## TODO eventually this should be packaged, and we can use system.file()
             paste(
                 readLines(magpie.payload),
-                "",
                 readLines(file.path('src', 'magpie-demo.Rmd')),
+                sep = '',
                 collapse = '\n')
             ),
         tags$textarea(id = 'nbSrc', style = 'display: none;'),
