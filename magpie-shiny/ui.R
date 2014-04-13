@@ -18,7 +18,8 @@ shinyUI(
             ),
         div(id = 'notebook', title = 'Compile notebook: F4\nInsert chunk: Ctrl+Alt+I',
             ## TODO make the magic happen
-            paste(readLines('src/magpie-demo.Rmd'), collapse = '\n')),
+            ## TODO eventually this should be packaged, and we can use system.file()
+            paste(readLines(file.path('src', 'magpie-demo.Rmd')), collapse = '\n')),
         tags$textarea(id = 'nbSrc', style = 'display: none;'),
         tags$script(src = 'ace-shiny.js', type = 'text/javascript'),
         htmlOutput('nbOut'),
