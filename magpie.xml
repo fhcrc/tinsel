@@ -15,10 +15,12 @@
     <data format="txt" name="output"/>
   </outputs>
   <configfiles>
+    <!-- TODO can this be CDATA? -->
     <configfile name="config">
       #for $i, $s in enumerate($exports)
-      ## TODO Add comment with "Dataset name","API_KEY",...
-      ${s.r_name} <- read.csv("${s.input.file_name}", as.is=TRUE)
+
+      ## TODO Add comment with &quot;Dataset name&quot;,&quot;API_KEY&quot;,...
+      ${s.r_name} &lt;- read.csv(&quot;${s.input.file_name}&quot;, as.is=TRUE)
 
       #end for
     </configfile>
