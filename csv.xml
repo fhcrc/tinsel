@@ -1,6 +1,0 @@
-<display id="magpie_csv" version="1.0.0" name="Load with">
-  <link id="magpie_csv" name="magpie">
-    <url target_frame="galaxy_main">http://stoat:13757/?filename=${qp($magpie_csv_.file_name)}</url>
-    <param type="data" name="magpie_csv_" format="csv"/>
-  </link>
-</display>

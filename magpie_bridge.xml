@@ -1,16 +1,15 @@
-<tool id="hutch_magpie" name="Export data to magpie" version="1.0.0">
+<tool id="magpie_bridge" name="Export data to magpie" version="1.0.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>echo "magpie 1.0.0"</version_command>
   <command>cp -f ${config} ${output}</command>
   <inputs>
-    <repeat name="exports" title="Datasets to export to magpie">
+    <repeat name="exports" title="Datasets to export">
       <param name="input" type="data" label="Dataset"/>
       <param name="r_name" type="text" size="32" value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
     </repeat>
   </inputs>
   <outputs>
-    <!-- TODO outputs only for non-interactive sessions -->
-    <data format="txt" name="output"/>
+    <data format="magpie" name="output" label="magpie package"/>
   </outputs>
   <configfiles>
     <!-- TODO can this be CDATA? -->
@@ -28,10 +27,8 @@
 
 **What it does**
 
-``magpie`` is an interactive analysis and visualization
-application with R and markdown support using Shiny_.
-
-:: _Shiny: http://shiny.rstudio.com/
+``magpie`` is an interactive analysis and visualization application
+with R and markdown support built with Shiny.
 
   </help>
 </tool>

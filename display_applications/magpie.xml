@@ -1,0 +1,6 @@
+<display id="magpie" version="1.0.0" name="Start ">
+  <link id="magpie" name="magpie">
+    <url target_frame="galaxy_main">http://stoat:13757/?${qp($magpie_payload.file_name)}</url>
+    <param type="data" name="magpie_payload" format="magpie"/>
+  </link>
+</display>
