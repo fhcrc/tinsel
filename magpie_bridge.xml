@@ -2,6 +2,7 @@
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>echo "magpie 1.0.0"</version_command>
   <command>cp -f ${payload} ${output}</command>
+  <!-- TODO check scontrol to see if shiny is running; if not, start it, and request the same node -->
   <inputs>
     <repeat name="exports" title="Datasets to export">
       <param name="input" type="data" label="Dataset"/>
