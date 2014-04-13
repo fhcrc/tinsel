@@ -5,7 +5,7 @@
   <inputs>
     <repeat name="exports" title="Datasets to export to magpie">
       <param name="input" type="data" label="Dataset"/>
-      <param name="r_name" type="text" value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
+      <param name="r_name" type="text" size="32" value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
     </repeat>
   </inputs>
   <outputs>
