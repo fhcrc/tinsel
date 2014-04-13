@@ -1,5 +1,8 @@
 library(shiny)
 
+## FIXME hack
+magpie.payload <- file.path('/shared/silo_researcher/Matsen_F/MatsenGrp/data/galaxy-shapley/database/files/005/dataset_5028.dat')
+
 ## div nbSrc takes source code from div notebook (via Ace editor), and div nbOut
 ## holds results from knitr
 shinyUI(
@@ -19,7 +22,12 @@ shinyUI(
         div(id = 'notebook', title = 'Compile notebook: F4\nInsert chunk: Ctrl+Alt+I',
             ## TODO make the magic happen
             ## TODO eventually this should be packaged, and we can use system.file()
-            paste(readLines(file.path('src', 'magpie-demo.Rmd')), collapse = '\n')),
+            paste(
+                readLines(magpie.payload),
+                "",
+                readLines(file.path('src', 'magpie-demo.Rmd')),
+                collapse = '\n')
+            ),
         tags$textarea(id = 'nbSrc', style = 'display: none;'),
         tags$script(src = 'ace-shiny.js', type = 'text/javascript'),
         htmlOutput('nbOut'),
