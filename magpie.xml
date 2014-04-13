@@ -1,19 +1,8 @@
 <tool id="hutch_magpie" name="Export data to magpie" version="1.0.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
-  <version_command>magpie.R --version</version_command>
-  <!-- TODO generate arguments with cheetah
-
-  Generate arguments of the form FORMAT:VARIABLE.NAME:FILE e.g.
-
-  csv:by.specimen:/path/to/by_specimen.csv
-  fasta:reads:/path/to/sequences.fasta
-
-  -->
+  <version_command>echo "magpie 1.0.0"</version_command>
   <command interpreter="bash">
-    magpie.R
-    #for $i, $s in enumerate($exports)
-        "${s.input.format}:${s.r_name}:${s.input.file_name}"
-    #end for
+    cp ${config} ${output}
   </command>
   <inputs>
     <repeat name="exports" title="Datasets to export to magpie">
@@ -23,10 +12,15 @@
   </inputs>
   <outputs>
     <!-- TODO outputs only for non-interactive sessions -->
+    <data format="txt" name="output"/>
   </outputs>
   <configfiles>
     <configfile name="config">
-      # TODO will we even need a config file?
+      #for $i, $s in enumerate($exports)
+## TODO Add comment with "Dataset name","API_KEY",...
+${s.r_name} <- read.csv("${s.input.file_name}", as.is=TRUE)
+
+      #end for
     </configfile>
   </configfiles>
   <help>
@@ -35,8 +29,8 @@
 
     **What it does**
 
-    ``magpie`` starts an interactive analysis and visualization
-    session with R and markdown support using Shiny_.
+    ``magpie`` is an interactive analysis and visualization
+    application with R and markdown support using Shiny_.
 
     :: _Shiny: http://shiny.rstudio.com/
 
