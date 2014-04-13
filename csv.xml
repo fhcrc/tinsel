@@ -1,0 +1,6 @@
+<display id="magpie_csv" version="1.0.0" name="view in">
+  <link id="magpie_csv" name="magpie">
+    <url target_frame="galaxy_main">http://stoat:13757/?filename=${dataset.file_name.qp}&amp;format=${dataset.format.qp}</url>
+    <param type="data" name="dataset" format="csv"/>
+  </link>
+</display>
