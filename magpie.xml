@@ -16,7 +16,6 @@
     <!-- TODO can this be CDATA? -->
     <configfile name="config">
       #for $i, $s in enumerate($exports)
-
       ## TODO Add comment with &quot;Dataset name&quot;,&quot;API_KEY&quot;,...
       ${s.r_name} &lt;- read.csv(&quot;${s.input.file_name}&quot;, as.is=TRUE)
 
@@ -25,14 +24,14 @@
   </configfiles>
   <help>
 
-    .. class:: infomark
+.. class:: infomark
 
-    **What it does**
+**What it does**
 
-    ``magpie`` is an interactive analysis and visualization
-    application with R and markdown support using Shiny_.
+``magpie`` is an interactive analysis and visualization
+application with R and markdown support using Shiny_.
 
-    :: _Shiny: http://shiny.rstudio.com/
+:: _Shiny: http://shiny.rstudio.com/
 
   </help>
 </tool>
