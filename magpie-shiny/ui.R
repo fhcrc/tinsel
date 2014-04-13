@@ -23,7 +23,7 @@ shinyUI(
             ## TODO make the magic happen
             ## TODO eventually this should be packaged, and we can use system.file()
             paste(
-                c(readLines(magpie.payload), '', readLines(file.path('src', 'magpie-demo.Rmd'))),
+                c(readLines(magpie.payload), readLines(file.path('src', 'magpie-demo.Rmd'))),
                 sep = '',
                 collapse = '\n')
             ),

@@ -1,7 +1,7 @@
 <tool id="magpie_bridge" name="Export data to magpie" version="1.0.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>echo "magpie 1.0.0"</version_command>
-  <command>cp -f ${config} ${output}</command>
+  <command>cp -f ${payload} ${output}</command>
   <inputs>
     <repeat name="exports" title="Datasets to export">
       <param name="input" type="data" label="Dataset"/>
@@ -13,16 +13,19 @@
   </outputs>
   <configfiles>
     <!-- TODO can this be CDATA? -->
-    <configfile name="config">
+    <configfile name="payload">
+```{r , echo=FALSE}
 ## magpie begin ##
 
 #for $i, $s in enumerate($exports)
-## TODO Add comment with &quot;Dataset name&quot;,&quot;API_KEY&quot;,...
+## TODO Add comment with &quot;Dataset name&quot;,&quot;API key,&quot;,...
 ${s.r_name} &lt;- read.csv(&quot;${s.input.file_name}&quot;, as.is=TRUE)
 
 #end for
 
 ## magpie end ##
+```
+
     </configfile>
   </configfiles>
   <help>
