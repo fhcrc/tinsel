@@ -14,18 +14,22 @@
   <configfiles>
     <!-- TODO can this be CDATA? -->
     <configfile name="payload">
-```{r , echo=FALSE}
-## magpie begin ##
+#raw
+```{r magpie, echo=FALSE}
+## magpie begin
 
+#end raw
 #for $i, $s in enumerate($exports)
-## TODO Add comment with &quot;Dataset name&quot;,&quot;API key,&quot;,...
+\#\# TODO Add comment with &quot;Dataset name&quot;,&quot;API key,&quot;,...
 ${s.r_name} &lt;- read.csv(&quot;${s.input.file_name}&quot;, as.is=TRUE)
 
 #end for
+#raw
 
-## magpie end ##
+## magpie end
 ```
 
+#end raw
     </configfile>
   </configfiles>
   <help>
