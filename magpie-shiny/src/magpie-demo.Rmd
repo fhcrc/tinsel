@@ -11,8 +11,8 @@ This interactive R notebook is running as a [Shiny][shiny] application
 in R on a gizmo node that was snagged for a few days with grabcpu, to
 emulate what having a real Shiny server would be like.
 
-Hint: You can change things! Use Ctrl-Alt-i to insert an R code block,
-use markdown syntax for text, and hit F4 to recompile. Just be
+Hint: You can change things! Use `Ctrl-Alt-I` to insert an R code block,
+use markdown syntax for text, and hit `F4` to recompile. Just be
 careful, there's no save button yet. Reload the page if you do too
 much damage.
 
