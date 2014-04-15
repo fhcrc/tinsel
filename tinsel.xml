@@ -1,6 +1,6 @@
-<tool id="magpie_bridge" name="Export data to magpie" version="1.0.0">
+<tool id="magpie_tinsel" name="Export data to magpie" version="1.0.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
-  <version_command>echo "magpie 1.0.0"</version_command>
+  <version_command>echo "tinsel 1.0.0"</version_command>
   <command>cp -f ${payload} ${output}</command>
   <!-- TODO check scontrol to see if shiny is running; if not, start it, and request the same node -->
   <inputs>
@@ -26,10 +26,10 @@ ${s.r_name} &lt;- read.csv(&quot;${s.input.file_name}&quot;, as.is=TRUE)
 
 #end for
 #raw
+ls()
 
 ## magpie end
 ```
-
 #end raw
     </configfile>
   </configfiles>
