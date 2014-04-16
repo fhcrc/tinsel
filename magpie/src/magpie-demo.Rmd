@@ -3,7 +3,7 @@ suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(seqinr))
 ```
 
-# Meet magpie! ![An image of a magpie.](http://i.imgur.com/USTIiqj.png)
+# Meet magpie! ![An image of a magpie.](magpie-64x64.png)
 
 ## An on-demand R notebook ##
 
