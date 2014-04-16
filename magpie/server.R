@@ -1,19 +1,38 @@
 library(shiny)
 library(knitr)
-options(device.ask.default = FALSE)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
+    cdata = session$clientData
+    observe({
+        query <- parseQueryString(cdata$url_search)
 
-    output$nbOut = reactive({
-        src = input$nbSrc
-        if (length(src) == 0L || src == '') return('Nothing to show yet...')
-        on.exit(unlink('figure/', recursive = TRUE)) # do not need the figure dir
+        isolate({
+            if (!is.null(query$url)) {
+                updateAceEditor(session, "notebook", value = paste(readLines(query$url), collapse = "\n"))
+            }
+        })
+    })
 
-        paste(knit2html(text = src, fragment.only = TRUE, quiet = TRUE),
-              '<script>',
-              '// highlight code blocks',
-              "$('#nbOut pre code').each(function(i, e) {hljs.highlightBlock(e)});",
-              'MathJax.Hub.Typeset(); // update MathJax expressions',
-              '</script>', sep = '\n')
+    observe({
+        input$loadButton
+        isolate({
+            if (input$script == "None") {
+                updateAceEditor(session, "notebook", value = "## welcome to magpie ##\n")
+            } else {
+                updateAceEditor(session, "notebook", value = paste(readLines(input$script), collapse = "\n"))
+            }
+        })
+    })
+
+    output$knitDocument <- renderUI({
+        input$knitButton
+        on.exit(unlink("figure/", recursive = TRUE))
+
+        isolate({
+            src <- input$notebook
+            if (length(src) == 0L || src == "") return("Nothing to show yet...")
+
+            withMathJax(HTML(paste(knit2html(text = src, fragment.only = TRUE, quiet = TRUE), sep = "\n")))
+        })
     })
 })
