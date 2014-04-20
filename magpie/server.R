@@ -2,37 +2,43 @@ library(shiny)
 library(knitr)
 
 shinyServer(function(input, output, session) {
-    cdata = session$clientData
+    cdata <- session$clientData
+
+    knitr.pre <- ""
+    knitr.post <- ""
+
     observe({
         query <- parseQueryString(cdata$url_search)
 
-        isolate({
-            if (!is.null(query$url)) {
-                updateAceEditor(session, "notebook", value = paste(readLines(query$url), collapse = "\n"))
-            }
-        })
-    })
+        ## TODO these conditionals could be much more elegant
 
-    observe({
-        input$loadButton
-        isolate({
-            if (input$script == "None") {
-                updateAceEditor(session, "notebook", value = "## welcome to magpie ##\n")
-            } else {
-                updateAceEditor(session, "notebook", value = paste(readLines(input$script), collapse = "\n"))
-            }
-        })
+        src <- ""
+
+        if (!is.null(query$pre)) {
+            knitr.pre <- paste(readLines(query$pre), collapse = "\n")
+        } else {
+            knitr.pre <- ""
+        }
+
+        if (!is.null(query$src)) {
+            src <- paste(readLines(query$src), collapse = "\n")
+        }
+
+        if (!is.null(query$post)) {
+            knitr.post <- paste(readLines(query$post), collapse = "\n")
+        } else {
+            knitr.post <- "\n"
+        }
+
+        updateAceEditor(session, "notebook", value = src)
     })
 
     output$knitDocument <- renderUI({
-        input$knitButton
         on.exit(unlink("figure/", recursive = TRUE))
 
-        isolate({
-            src <- input$notebook
-            if (length(src) == 0L || src == "") return("Nothing to show yet...")
+        src <- paste(knitr.pre, input$notebook, knitr.post)
 
-            withMathJax(HTML(paste(knit2html(text = src, fragment.only = TRUE, quiet = TRUE), sep = "\n")))
-        })
+        if (length(src) == 0L || src == "") return("Nothing to show yet...")
+        withMathJax(HTML(paste(knit2html(text = src, fragment.only = TRUE, quiet = TRUE), sep = "\n")))
     })
 })
