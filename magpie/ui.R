@@ -11,8 +11,6 @@ source.plugin <-
              aceEditor("sourceEditor", mode = "markdown", value = "\n# magpie", height = "640px"),
              submitButton("knit")))
 
-print(knitr.plugin)
-
 shinyUI(navbarPage(
     img(src = "magpie-64x64.png", style = "height: 1em; vertical-align: top;"),
     tabPanel(knitr.plugin$name, knitr.plugin$output),
