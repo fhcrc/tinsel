@@ -5,7 +5,7 @@ options(device.ask.default = FALSE)
 shinyServer(function(input, output) {
 
     output$nbOut = reactive({
-        src = input$nbSrc
+        src <- input$nbSrc
         if (length(src) == 0L || src == '') return('Nothing to show yet...')
         on.exit(unlink('figure/', recursive = TRUE)) # do not need the figure dir
 

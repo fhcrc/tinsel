@@ -1,4 +1,4 @@
-<tool id="magpie_bridge" name="Export data to magpie" version="1.0.0">
+<tool id="tinsel" name="Export data to magpie" version="1.0.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>echo "magpie 1.0.0"</version_command>
   <command>cp -f ${payload} ${output}</command>

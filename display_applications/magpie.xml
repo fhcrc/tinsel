@@ -1,6 +1,6 @@
 <display id="magpie" version="1.0.0" name="Start ">
   <link id="magpie" name="magpie">
-    <url target_frame="galaxy_main">http://gizmoc46:13758</url>
-    <param type="data" name="magpie_payload" format="magpie"/>
+    <url target_frame="galaxy_main">http://gizmod17:13758</url>
+    <param type="data" name="payload" format="magpie"/>
   </link>
 </display>

@@ -1,7 +1,7 @@
 library(shiny)
 
 ## FIXME hack
-magpie.payload <- file.path('/shared/silo_researcher/Matsen_F/MatsenGrp/data/galaxy-shapley/database/files/005/dataset_5033.dat')
+magpie.payload <- file.path('/shared/silo_researcher/Matsen_F/MatsenGrp/data/galaxy-shapley/database/files/006/dataset_6115.dat')
 
 ## div nbSrc takes source code from div notebook (via Ace editor), and div nbOut
 ## holds results from knitr
