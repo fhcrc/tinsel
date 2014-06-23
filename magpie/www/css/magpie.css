@@ -1,4 +1,4 @@
-#proxy {
+#notebookControl {
     position: absolute;
     top: 0;
     right: 0;
@@ -13,7 +13,7 @@
     bottom: 0;
 }
 
-#nbOut {
+#knitrOut {
     position: absolute;
     left: 620px;
     top: 0;

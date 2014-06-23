@@ -1,8 +1,6 @@
 #!/usr/bin/env Rscript
 
 library(shiny)
-library(knitr)
-
 options(shiny.reactlog=TRUE)
 
 ## THIS IS LITERALLY ALL THAT WE NEED TO DO

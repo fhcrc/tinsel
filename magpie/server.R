@@ -1,52 +1,56 @@
-library(shiny)
 library(knitr)
+library(shinyAce)
 
-source.file <- list(name = "default", value = "\n## this is the default file")
-makeReactiveBinding("source.file")
+## TODO move "plugin" code to new files
 
-knitr.plugin <- function(input, output, session) {
-    output$knitrDocument <- renderUI({
-        on.exit(unlink("figure/", recursive = TRUE))
+## tinsel is a plugin that reads a JSON file and sets up... something.
+## this could range from something as small as a bit of boilerplate
+## code to include before knitting an Rmd file (as in this prototype),
+## or it could be responsible for setting up an entire pipeline.
 
-        if (is.null(source.file)) return("no source file available")
-        src <- source.file$value
-
-        if (length(src) == 0L || src == "") return("source file is empty")
-
-        withMathJax(HTML(paste(knit2html(text = src, fragment.only = TRUE, quiet = TRUE), sep = "\n")))
-    })
-}
-
-source.plugin <- function(input, output, session) {
-    cdata <- session$clientData
+## TODO beware excessive soft-coding
+tinsel.server <- quote({
+    ## tinsel's only server responsibility here is to watch the session
+    ## variable and parse the supplied magpie JSON configuration if the
+    ## 'url' query parameter is present.
 
     observe({
-        query <- parseQueryString(cdata$url_search)
+        query <- parseQueryString(session$clientData$url_search)
+        url <- query$url
 
-        if (is.null(query$src)) return()
+        ## TODO handle missing parameters or connection errors
+        ## TODO tinsel shouldn't know about knitr; write to a pipe instead
+        updateAceEditor(session, 'knitrNotebook', value = paste(readLines(con = url), collapse = '\n'))
+    })
+})
 
-        src <- paste(readLines(query$src), collapse = "\n")
-        source.file <- list(name = query$src, value = src)
+## the knitr plugin presents the user with an interactive R notebook
+## that's already been set up for them to do fun things with their
+## data.
 
-        print(source.file)
+knitr.server <- quote({
+    ## knitr reacts when the notebook's action button is pressed by
+    ## grabbing the notebook's contents and rendering it.
+    ## TODO read the notebook's contents from a pipe instead
+    output$knitrOut <- renderUI({
+        input$knitrRefresh
+        isolate(withMathJax(HTML(knit2html(text = input$knitrNotebook, fragment.only = TRUE, quiet = TRUE))))
     })
 
+    ## knitr also switches the active tab in the UI when the
+    ## notebook's action button is pressed.
     observe({
-        source.file
-
-        updateAceEditor(session, "sourceEditor", value = source.file$value)
+        input$knitrRefresh
+        updateTabsetPanel(session, 'magpieTabs', selected = 'knitr')
     })
+})
 
-    observe({
-        if (is.null(input$sourceEditor)) return()
-
-        source.file <- list(name = "notebook save", value = input$sourceEditor)
-
-        print(source.file)
-    })
-}
+## Having most of the server logic offloaded to plugins makes for a
+## terse call to shinyServer :)
 
 shinyServer(function(input, output, session) {
-    source.plugin(input, output, session)
-    knitr.plugin(input, output, session)
+    ## eval the plugins
+    ## TODO we should lapply(server(plugins), eval) or something
+    eval(tinsel.server)
+    eval(knitr.server)
 })

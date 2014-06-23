@@ -3,7 +3,7 @@ suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(seqinr))
 ```
 
-# Meet magpie! ![An image of a magpie.](magpie-64x64.png)
+# Meet magpie! ![An image of a magpie.](img/magpie-64x64.png)
 
 ## An on-demand R notebook ##
 
@@ -67,7 +67,7 @@ testing it back in March. To be precise, it was generated Sun Mar 30
 10:18:18 2014 (UTC). Here's how I know, and what Galaxy (and a user)
 can see about a dataset:
 
-![A screenshot of dataset metadata.](http://i.imgur.com/ISMjKcx.png)
+![A screenshot of dataset metadata.](img/dataset-metadata.png)
 
 Anyway, for tools like Martin and Dan's, I think this kind of approach
 makes a lot more sense than the standard submit-and-wait Galaxy
