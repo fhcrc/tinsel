@@ -1,6 +1,9 @@
 <display id="magpie" version="1.0.0" name="Start ">
-  <link id="magpie" name="magpie">
-    <url target_frame="galaxy_main">http://gizmod17:13758</url>
-    <param type="data" name="payload" format="magpie"/>
-  </link>
+  <dynamic_links from_file="tool-data/shared/shiny_applications.txt"
+                 skip_startswith="#" id="0" name="0">
+    <dynamic_param name="app_id" value="0"/>
+    <dynamic_param name="app_url" value="1"/>
+    <url>${app_url}?url=${$config.url}</url>
+    <param type="data" name="config" url="config.json"/>
+  </dynamic_links>
 </display>
