@@ -1,4 +1,0 @@
-:name "magpie"
-
-:relevant-files '("\\.eproject$" "\\.R$" "\\.Rmd$" "\\.xml$")
-:irrelevant-files '("/knitr/")
