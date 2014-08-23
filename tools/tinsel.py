@@ -6,7 +6,7 @@ import json
 import sys
 import urllib
 
-TINSEL_VERSION = '0.1.0'
+TINSEL_VERSION = '0.2.0'
 
 def expand_ribbon(cell):
     with open(cell['input']) as f:
