@@ -1,6 +1,6 @@
 <tool id="tinsel" name="Export data to magpie" version="0.1.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
-  <version_command>echo "tinsel 0.1.0"</version_command>
+  <version_command>tinsel.py --version</version_command>
   <command interpreter="python">tinsel.py -u ${config} &gt; ${output}</command>
   <!-- TODO check scontrol to see if shiny is running; if not, start it, and request the same node -->
   <inputs>

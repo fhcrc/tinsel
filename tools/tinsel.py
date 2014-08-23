@@ -30,8 +30,10 @@ def expand_dataset(cell):
 
 #####
 
-parser = argparse.ArgumentParser(description='tinsel {}'.format(TINSEL_VERSION))
+parser = argparse.ArgumentParser(description='tinsel')
 parser.add_argument('-u', '--url', required=True)
+parser.add_argument('-v', '--version', action='version',
+                    version="%(prog)s {}".format(TINSEL_VERSION))
 args = parser.parse_args()
 
 with contextlib.closing(urllib.urlopen(args.url)) as response:
