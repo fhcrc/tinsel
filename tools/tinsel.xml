@@ -1,8 +1,7 @@
 <tool id="tinsel" name="Export data to magpie" version="0.2.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>tinsel.py --version</version_command>
-  <command interpreter="python">tinsel.py -u ${config} &gt; ${output}</command>
-  <!-- TODO check scontrol to see if shiny is running; if not, start it, and request the same node -->
+  <command interpreter="python">tinsel.py -u ${tinselfile} &gt; ${output}</command>
   <inputs>
     <param name="interactive" type="boolean" truevalue="true" falsevalue="false" label="Interactive"/>
     <repeat name="exports" title="Dataset to export">
@@ -15,34 +14,45 @@
   </outputs>
   <configfiles>
     <!--
-         tinsel cell file aped from IPython's notebook format.
+         tinselfile aped from IPython's notebook format.
          http://ipython.org/ipython-doc/1/interactive/nbconvert.html
     -->
-    <configfile name="config">
+    <configfile name="tinselfile">
 <![CDATA[
 {
-  "metadata": {
-    "interactive": "${interactive}"
-  },
-  "cells": [
+ "metadata": {
+  "name": "tinselfile",
+  "interactive": "${interactive}"
+ },
+ "nbformat": 3,
+ "nbformat_minor": 0,
+ "worksheets": [
+  {
+   "cells": [
 #for $i, $s in enumerate($exports)
     {
-  #if $s.input.ext=="ribbon"
-      "cell_type": "ribbon",
-      "input": "${s.input.file_name}",
-      "metadata": {}
+  #if $s.input.ext in ('r', 'ribbon'):
+     "cell_type": "ribbon",
+     "metadata": {},
+  #else if $s.input.ext in ('markdown', 'rmarkdown'):
+     "cell_type": "${s.input.ext}",
+     "metadata": {},
   #else
-      "cell_type": "dataset",
-      "input": "${s.input.file_name}",
-      "metadata": {
-        "r_name": "${s.r_name}",
-        "format": "${s.input.ext}"
-      }
+     "cell_type": "dataset",
+     "metadata": {
+      "r_name": "${s.r_name}",
+      "format": "${s.input.ext}"
+     },
   #end if
+     "input": "${s.input.file_name}"
   #if $i < len($exports) - 1 then '},' else '}'#
 #end for
+   ],
+   "metadata": {}
+  }
  ]
 }
+
 ]]>
     </configfile>
   </configfiles>
