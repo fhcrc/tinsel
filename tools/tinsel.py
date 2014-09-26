@@ -29,7 +29,7 @@ def expand_dataset(cell):
         cell = tag_cell(cell, 'dataset')
         cell['cell_type'] = 'code'
         cell['language'] = 'r'
-        cell['input'] = "{} <- read.csv('{}', header=TRUE, as.is=TRUE)".format(cell['metadata']['r_name'], cell['input'])
+        cell['input'] = "{} <- read.csv('{}', header=TRUE, as.is=TRUE)\n".format(cell['metadata']['r_name'], cell['input'])
         cell['outputs'] = list()
     return cell
 
