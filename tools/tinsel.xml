@@ -5,7 +5,7 @@
     <requirement type="package" version="3.1.1">R</requirement>
     <requirement type="package" version="1.12.4.2">pandoc</requirement>
   </requirements>
-  <command interpreter="python">tinsel.py -u ${tinselfile} -n ${notebook} -d ${document}</command>
+  <command interpreter="python">tinsel.py -u ${tinselfile} -n ${notebook} -H ${html_out}</command>
   <inputs>
     <param name="interactive" type="boolean" truevalue="true" falsevalue="false" label="Interactive"/>
     <repeat name="exports" title="Dataset to export">
@@ -15,8 +15,8 @@
   </inputs>
   <outputs>
     <data format="magpie" name="notebook" label="magpie notebook"/>
-    <data format="Rmd" name="document" label="R Markdown document">
-      <discover_datasets pattern="__designation_and_ext__" directory="tinsel" visible="true" />
+    <data format="html" name="html_out" label="rendered document">
+      <discover_datasets pattern="__designation_and_ext__" directory="rmd_out" visible="true"/>
     </data>
   </outputs>
   <configfiles>

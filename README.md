@@ -22,4 +22,6 @@ Add the following to `datatypes_conf.xml`:
 </datatype>
 ```
 
+Set `sanitize_all_html = False` in `universe_wsgi.ini` if you want to be able to view the HTML outputs as intended.
+
 Then restart Galaxy!

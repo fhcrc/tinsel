@@ -3,8 +3,11 @@
 import argparse
 import contextlib
 import json
+import os
+import subprocess
 import sys
 import urllib
+from shutil import copyfile
 
 TINSEL_VERSION = '0.2.0'
 
@@ -71,8 +74,7 @@ def gather(worksheet):
 parser = argparse.ArgumentParser(description='tinsel')
 parser.add_argument('-u', '--url', required=True)
 parser.add_argument('-n', '--notebook')
-parser.add_argument('-d', '--document')
-parser.add_argument('-r', '--render-document', action='store_true')
+parser.add_argument('-H', '--html')
 parser.add_argument('-v', '--version', action='version',
                     version="%(prog)s {}".format(TINSEL_VERSION))
 args = parser.parse_args()
@@ -90,16 +92,12 @@ with contextlib.closing(urllib.urlopen(args.url)) as response:
         with open(args.notebook, 'w') as notebook:
             json.dump(control, notebook, sort_keys=True, indent=2, separators=(',', ': '))
 
-    if args.document:
-        with open(args.document, 'w') as document:
+    if args.html:
+        os.mkdir('rmd_out')
+        with open('rmd_out/document.Rmd', 'w') as document:
             cell_inputs = gather(worksheet)
             for line in cell_inputs:
                 document.write(line)
 
-    # untested
-    if args.document and args.render_document:
-        import subprocess
-        subprocess.check_call(
-            ['R', '-e',
-            "rmarkdown::render({}, output_format = 'html_document', output_dir = file.path(getwd(), 'tinsel'))".format(args.document)
-            ])
+        print subprocess.check_output("R -e \"rmarkdown::render('rmd_out/document.Rmd', output_file = '{}', output_format = 'html_document')\"".format(args.html),
+                shell = True, stderr = sys.stdout.fileno())
