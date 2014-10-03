@@ -1,4 +1,4 @@
-<tool id="tinsel" name="Export data to magpie" version="0.2.0">
+<tool id="tinsel" name="Export data to magpie" version="0.3.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>tinsel.py --version</version_command>
   <requirements>
