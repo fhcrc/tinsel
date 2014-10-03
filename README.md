@@ -15,8 +15,8 @@ Copy (or symlink) `display_applications/magpie.xml` to Galaxy's `display_applica
 Add the following to `datatypes_conf.xml`:
 
 ```xml
-<datatype extension="Rmd" type="galaxy.datatypes.data:Text" display_in_upload="True"/>
-<datatype extension="ribbon" type="galaxy.datatypes.data:Text" subclass="True" display_in_upload="True"/>
+<datatype extension="Rmd" type="galaxy.datatypes.data:Text" mimetype="text/x-markdown" display_in_upload="True"/>
+<datatype extension="ribbon" type="galaxy.datatypes.data:Text" mimetype="text/x-R" subclass="True" display_in_upload="True"/>
 <datatype extension="magpie" type="galaxy.datatypes.data:Text" mimetype="application/json" subclass="True" display_in_upload="False">
   <display file="magpie.xml"/>
 </datatype>
