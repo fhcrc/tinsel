@@ -21,8 +21,19 @@
       </param>
     </conditional>
     <repeat name="exports" title="Dataset to export">
-      <param name="input" type="data" label="Dataset"/>
-      <param name="r_name" type="text" size="32" value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
+      <conditional name="source">
+        <param name="type" type="select" label="Source type">
+          <option value="data" selected="true">Data</option>
+          <option value="code">Code</option>
+        </param>
+        <when value="data">
+          <param name="input" type="data" label="Dataset"/>
+          <param name="r_name" type="text" size="32" value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
+        </when>
+        <when value="code">
+          <param name="input" type="data" format="ribbon" label="Ribbon"/>
+        </when>
+      </conditional>
     </repeat>
   </inputs>
   <outputs>
@@ -50,20 +61,17 @@
    "cells": [
 #for $i, $s in enumerate($exports)
     {
-  #if $s.input.ext in ('r', 'ribbon'):
+  #if $s.source.type == 'code':
      "cell_type": "ribbon",
-     "metadata": {},
-  #else if $s.input.ext in ('markdown', 'rmarkdown'):
-     "cell_type": "${s.input.ext}",
      "metadata": {},
   #else
      "cell_type": "dataset",
      "metadata": {
-      "r_name": "${s.r_name}",
-      "format": "${s.input.ext}"
+      "r_name": "${s.source.r_name}",
+      "format": "${s.source.input.ext}"
      },
   #end if
-     "input": "${s.input.file_name}"
+     "input": "${s.source.input.file_name}"
   #if $i < len($exports) - 1 then '},' else '}'#
 #end for
    ],
