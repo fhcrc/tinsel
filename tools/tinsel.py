@@ -94,10 +94,10 @@ with contextlib.closing(urllib.urlopen(args.url)) as response:
 
     if args.html:
         os.mkdir('rmd_out')
-        with open('rmd_out/document.Rmd', 'w') as document:
+        with open('rmd_out/source.Rmd', 'w') as source:
             cell_inputs = gather(worksheet)
             for line in cell_inputs:
-                document.write(line)
+                source.write(line)
 
-        print subprocess.check_output("R -e \"rmarkdown::render('rmd_out/document.Rmd', output_file = '{}', output_format = 'html_document')\"".format(args.html),
+        print subprocess.check_output("R -e \"rmarkdown::render('rmd_out/source.Rmd', output_file = '{}', output_format = 'html_document')\"".format(args.html),
                 shell = True, stderr = sys.stdout.fileno())
