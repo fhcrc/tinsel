@@ -1,48 +1,85 @@
-<tool id="tinsel" name="Export data to magpie" version="0.1.0">
+<tool id="tinsel" name="Export data to magpie" version="0.3.0">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
-  <version_command>echo "tinsel 0.1.0"</version_command>
-  <command interpreter="python">tinsel.py -u ${config} &gt; ${output}</command>
-  <!-- TODO check scontrol to see if shiny is running; if not, start it, and request the same node -->
+  <version_command>tinsel.py --version</version_command>
+  <requirements>
+    <requirement type="package" version="3.1.1">R</requirement>
+    <requirement type="package" version="1.12.4.2">pandoc</requirement>
+  </requirements>
+  <command interpreter="python">
+    tinsel.py
+    -u ${tinselfile}
+    -n ${notebook}
+    #if $render_output['value'] == "true"
+    -H ${html_out}
+    #end if
+  </command>
   <inputs>
-    <param name="interactive" type="boolean" truevalue="true" falsevalue="false" label="Interactive"/>
+    <conditional name="render_output">
+      <param name="value" type="select" label="Render notebook">
+        <option value="true">Yes</option>
+        <option value="false" selected="true">No</option>
+      </param>
+    </conditional>
     <repeat name="exports" title="Dataset to export">
-      <param name="input" type="data" label="Dataset"/>
-      <param name="r_name" type="text" size="32" value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
+      <conditional name="source">
+        <param name="type" type="select" label="Source type">
+          <option value="data" selected="true">Data</option>
+          <option value="code">Code</option>
+        </param>
+        <when value="data">
+          <param name="input" type="data" label="Dataset"/>
+          <param name="r_name" type="text" size="32" value="my.dataset" label="R variable name" help="From the R documentation for make.names, 'A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number.'"/>
+        </when>
+        <when value="code">
+          <param name="input" type="data" format="ribbon" label="Ribbon"/>
+        </when>
+      </conditional>
     </repeat>
   </inputs>
   <outputs>
-    <data format="magpie" name="output" label="magpie package"/>
+    <data format="magpie" name="notebook" label="magpie notebook"/>
+    <data format="html" name="html_out" label="rendered document">
+      <discover_datasets pattern="__designation_and_ext__" directory="rmd_out" visible="true"/>
+      <filter>(render_output['value'] == "true")</filter>
+    </data>
   </outputs>
   <configfiles>
     <!--
-         tinsel cell file aped from IPython's notebook format.
+         tinselfile aped from IPython's notebook format.
          http://ipython.org/ipython-doc/1/interactive/nbconvert.html
     -->
-    <configfile name="config">
+    <configfile name="tinselfile">
 <![CDATA[
 {
-  "metadata": {
-    "interactive": "${interactive}"
-  },
-  "cells": [
+ "metadata": {
+  "name": "tinselfile"
+ },
+ "nbformat": 3,
+ "nbformat_minor": 0,
+ "worksheets": [
+  {
+   "cells": [
 #for $i, $s in enumerate($exports)
     {
-  #if $s.input.ext=="ribbon"
-      "cell_type": "ribbon",
-      "input": "${s.input.file_name}",
-      "metadata": {}
+  #if $s.source.type == 'code':
+     "cell_type": "ribbon",
+     "metadata": {},
   #else
-      "cell_type": "dataset",
-      "input": "${s.input.file_name}",
-      "metadata": {
-        "r_name": "${s.r_name}",
-        "format": "${s.input.ext}"
-      }
+     "cell_type": "dataset",
+     "metadata": {
+      "r_name": "${s.source.r_name}",
+      "format": "${s.source.input.ext}"
+     },
   #end if
+     "input": "${s.source.input.file_name}"
   #if $i < len($exports) - 1 then '},' else '}'#
 #end for
+   ],
+   "metadata": {}
+  }
  ]
 }
+
 ]]>
     </configfile>
   </configfiles>
