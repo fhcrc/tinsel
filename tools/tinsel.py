@@ -9,7 +9,7 @@ import sys
 import urllib
 from shutil import copyfile
 
-TINSEL_VERSION = '0.3.0'
+TINSEL_VERSION = '0.3.1'
 
 def tag_cell(cell, cell_type):
     cell['metadata']['tinsel_input'] = cell['input']
