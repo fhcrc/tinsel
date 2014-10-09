@@ -1,6 +1,6 @@
 # Installation
 
-Add the following to whichever tool configuration file you prefer:
+Add the following to `tool_conf.xml` or equivalent.
 
 ```xml
 <section id="hutch" name="Hutch Toolbox">
@@ -10,7 +10,7 @@ Add the following to whichever tool configuration file you prefer:
 </section>
 ```
 
-Copy `display_applications/shiny_applications.txt.example` to Galaxy's `tool-data/shared` directory as `shiny_applications.txt` (and edit if necessary).
+Copy `display_applications/shiny_applications.txt.example` to Galaxy's `tool-data/shared` directory as `shiny_applications.txt` and edit as necessary.
 
 Copy `display_applications/shiny_app_dirs.loc.sample` to Galaxy's `tool-data` directory as `shiny_app_dirs.loc` and edit as necessary.
 
