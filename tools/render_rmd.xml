@@ -8,7 +8,7 @@
     <requirement type="package" version="1.12.4.2">pandoc</requirement>
   </requirements>
   <inputs>
-    <param name="document" type="data" format="Rmd" label="Rmd source"/>
+    <param name="document" type="data" format="rmd" label="Rmd source"/>
   </inputs>
   <outputs>
     <data format="html" name="html_out" label="${tool.name} on ${on_string}: HTML">

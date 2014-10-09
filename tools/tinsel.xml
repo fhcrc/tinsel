@@ -37,7 +37,7 @@
     </repeat>
   </inputs>
   <outputs>
-    <data format="Rmd" name="source" label="${tool.name} on ${on_string}: Rmd"/>
+    <data format="rmd" name="source" label="${tool.name} on ${on_string}: Rmd"/>
     <data format="magpie" name="notebook" label="${tool.name} on ${on_string}: notebook">
       <filter>(notebook_out['value'] == "true")</filter>
     </data>
