@@ -1,4 +1,4 @@
-<display id="magpie" version="1.0.0" name="Start ">
+<display id="magpie" version="1.0.0" name="open with ">
   <dynamic_links from_file="tool-data/shared/shiny_applications.txt"
                  skip_startswith="#" id="0" name="0">
     <dynamic_param name="app_id" value="0"/>

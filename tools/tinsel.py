@@ -7,7 +7,6 @@ import os
 import subprocess
 import sys
 import urllib
-from shutil import copyfile
 
 TINSEL_VERSION = '0.3.1'
 
@@ -72,32 +71,27 @@ def gather(worksheet):
 #####
 
 parser = argparse.ArgumentParser(description='tinsel')
-parser.add_argument('-u', '--url', required=True)
-parser.add_argument('-n', '--notebook')
-parser.add_argument('-H', '--html')
+parser.add_argument('-c', '--config', required=True)
+parser.add_argument('-n', '--notebook-out')
+parser.add_argument('-o', '--source-out', required=True)
 parser.add_argument('-v', '--version', action='version',
                     version="%(prog)s {}".format(TINSEL_VERSION))
 args = parser.parse_args()
 
-with contextlib.closing(urllib.urlopen(args.url)) as response:
-    control = json.load(response)
+with contextlib.closing(urllib.urlopen(args.config)) as response:
+    config = json.load(response)
 
-    control['metadata']['tinsel_version'] = TINSEL_VERSION
-    control['metadata']['tinsel_args'] = ' '.join(sys.argv[1:])
+    config['metadata']['tinsel_version'] = TINSEL_VERSION
+    config['metadata']['tinsel_args'] = ' '.join(sys.argv[1:])
 
-    worksheet = control['worksheets'][0]
+    worksheet = config['worksheets'][0]
     expand(worksheet)
 
-    if args.notebook:
-        with open(args.notebook, 'w') as notebook:
-            json.dump(control, notebook, sort_keys=True, indent=2, separators=(',', ': '))
+    if args.notebook_out:
+        with open(args.notebook_out, 'w') as notebook:
+            json.dump(config, notebook, sort_keys=True, indent=2, separators=(',', ': '))
 
-    if args.html:
-        os.mkdir('rmd_out')
-        with open('rmd_out/source.Rmd', 'w') as source:
-            cell_inputs = gather(worksheet)
-            for line in cell_inputs:
-                source.write(line)
-
-        print subprocess.check_output("R -e \"rmarkdown::render('rmd_out/source.Rmd', output_file = '{}', output_format = 'html_document')\"".format(args.html),
-                shell = True, stderr = sys.stdout.fileno())
+    with open(args.source_out, 'w') as source:
+        cell_inputs = gather(worksheet)
+        for line in cell_inputs:
+            source.write(line)

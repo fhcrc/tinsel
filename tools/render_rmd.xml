@@ -1,0 +1,29 @@
+<tool id="render_rmd" name="Render R markdown" version="0.1.0">
+  <description>to HTML</description>
+  <command interpreter="Rscript">
+    render_wrapper.R ${document} ${html_out}
+  </command>
+  <requirements>
+    <requirement type="package" version="3.1.1">R</requirement>
+    <requirement type="package" version="1.12.4.2">pandoc</requirement>
+  </requirements>
+  <inputs>
+    <param name="document" type="data" format="Rmd" label="Rmd source"/>
+  </inputs>
+  <outputs>
+    <data format="html" name="html_out" label="${tool.name} on ${on_string}: HTML">
+      <discover_datasets pattern="__designation_and_ext__" directory="output" visible="true"/>
+    </data>
+  </outputs>
+  <help>
+
+.. class:: infomark
+
+**What it does**
+
+This tool renders an R markdown document into static HTML.
+
+  </help>
+</tool>
+
+

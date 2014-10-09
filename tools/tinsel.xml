@@ -1,4 +1,4 @@
-<tool id="tinsel" name="Export data to magpie" version="0.3.1">
+<tool id="tinsel" name="Gather data and code" version="0.3.1">
   <description>for interactive analysis, visualization, and annotation with R and markdown</description>
   <version_command>tinsel.py --version</version_command>
   <requirements>
@@ -7,20 +7,20 @@
   </requirements>
   <command interpreter="python">
     tinsel.py
-    -u ${tinselfile}
-    -n ${notebook}
-    #if $render_output['value'] == "true"
-    -H ${html_out}
+    --config ${tinselfile}
+    --source-out ${source}
+    #if $notebook_out['value'] == "true"
+    --notebook-out ${notebook}
     #end if
   </command>
   <inputs>
-    <conditional name="render_output">
-      <param name="value" type="select" label="Render notebook">
+    <conditional name="notebook_out">
+      <param name="value" type="select" label="Also create a magpie notebook?">
         <option value="true">Yes</option>
         <option value="false" selected="true">No</option>
       </param>
     </conditional>
-    <repeat name="exports" title="Dataset to export">
+    <repeat name="exports" title="Data/Code Export">
       <conditional name="source">
         <param name="type" type="select" label="Source type">
           <option value="data" selected="true">Data</option>
@@ -37,10 +37,9 @@
     </repeat>
   </inputs>
   <outputs>
-    <data format="magpie" name="notebook" label="magpie notebook"/>
-    <data format="html" name="html_out" label="rendered document">
-      <discover_datasets pattern="__designation_and_ext__" directory="rmd_out" visible="true"/>
-      <filter>(render_output['value'] == "true")</filter>
+    <data format="Rmd" name="source" label="${tool.name} on ${on_string}: Rmd"/>
+    <data format="magpie" name="notebook" label="${tool.name} on ${on_string}: notebook">
+      <filter>(notebook_out['value'] == "true")</filter>
     </data>
   </outputs>
   <configfiles>
@@ -89,8 +88,8 @@
 
 **What it does**
 
-``magpie`` is an interactive analysis and visualization application
-with R and markdown support built with Shiny.
+``tinsel`` gathers together datasets and bits of R code called *ribbons* into an R markdown document.
+It can also optionally generate a *notebook* for use with ``magpie``, a simple web-based R notebook application built with Shiny.
 
   </help>
 </tool>
