@@ -4,7 +4,7 @@ set -eu
 
 document=$1
 shiny_app_dir=$2
-gxy_uid=$3
+user_email=$3
 
 if [ ! -d "${shiny_app_dir}" ]; then
     echo "${shiny_app_dir} not found or not a directory" >&2
