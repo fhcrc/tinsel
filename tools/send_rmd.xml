@@ -1,0 +1,27 @@
+<tool id="send_rmd" name="Send an R markdown document" version="0.1.0">
+  <description>to a Shiny server</description>
+  <command interpreter="bash">
+    send_rmd.sh "${document}" "${shiny_app_dir}" "${userEmail}" &gt; "${output_log}"
+  </command>
+  <inputs>
+    <param name="document" type="data" format="rmd" label="Rmd source"/>
+    <param name="shiny_app_dir" type="select" label="Shiny application directory">
+      <options from_file="shiny_app_dirs.loc">
+        <column name="name" index="0"/>
+        <column name="value" index="1"/>
+      </options>
+    </param>
+  </inputs>
+  <outputs>
+    <data format="txt" name="output_log"/>
+  </outputs>
+  <help>
+
+.. class:: infomark
+
+**What it does**
+
+This tool sends an R markdown document to a preconfigured Shiny server directory.
+
+  </help>
+</tool>
